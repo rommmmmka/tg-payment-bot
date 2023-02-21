@@ -14,6 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.payments.LabeledPrice
 import org.telegram.telegrambots.meta.api.objects.payments.PreCheckoutQuery
 import org.telegram.telegrambots.meta.api.objects.payments.SuccessfulPayment
+import java.math.BigDecimal
 import java.util.*
 
 
@@ -78,7 +79,7 @@ class BotController(
                 description = description.substring(253) + "..."
             }
 
-            val cost = invoice.sum.intValueExact() * 100
+            val cost = invoice.sum.multiply(BigDecimal.valueOf(100)).intValueExact()
 
             execute(
                 SendInvoice.builder()
