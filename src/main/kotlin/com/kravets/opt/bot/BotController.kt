@@ -4,12 +4,11 @@ import com.kravets.opt.data.Invoice
 import com.kravets.opt.exception.InvoiceAlreadyPayedException
 import com.kravets.opt.exception.InvoiceNotFoundException
 import com.kravets.opt.repository.InvoiceRepository
-import com.kravets.opt.repository.UserRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.methods.AnswerPreCheckoutQuery
-import org.telegram.telegrambots.meta.api.methods.send.SendInvoice
+import org.telegram.telegrambots.meta.api.methods.invoices.SendInvoice
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.objects.Update
 import org.telegram.telegrambots.meta.api.objects.payments.LabeledPrice
@@ -22,19 +21,10 @@ import java.util.*
 class BotController(
     private val botConfig: BotConfig,
     private val invoiceRepository: InvoiceRepository,
-    private val userRepository: UserRepository
-) : TelegramLongPollingBot() {
+) : TelegramLongPollingBot(botConfig.token) {
 
     override fun getBotUsername(): String {
         return botConfig.name!!
-    }
-
-    override fun getBotToken(): String {
-        return botConfig.token!!
-    }
-
-    fun getBotPaymentToken(): String {
-        return botConfig.botPaymentToken!!
     }
 
     override fun onUpdateReceived(update: Update) {
@@ -67,11 +57,12 @@ class BotController(
                     .parseMode("Markdown")
                     .text(
                         """
-                        ${invoice.user.fio}
+                        *${invoice.user.fio}*
                         ${invoice.user.login}
-                        Сумма оплаты за ${String.format("%02d", invoice.month)}.${invoice.year}: ${invoice.sum} руб.
                         
-                        ТЕСТОВЫЙ РЕЖИМ ОПЛАТЫ
+                        *Сумма оплаты за ${String.format("%02d", invoice.month)}.${invoice.year}:* ${invoice.sum} руб.
+                        
+                        *Тестовый режим оплаты*
                         Для оплаты воспользуйтесь тестовой картой:
                         `4242424242424242`
                         Введите любой валидный срок действия и CVC
@@ -80,9 +71,9 @@ class BotController(
                     .build()
             )
 
-            val title: String = "Оплата за " + invoice.month + "." + invoice.year
+            val title: String = String.format("Оплата за %02d.%d", invoice.month, invoice.year)
 
-            var description: String = invoice.user.fio + "\n" + invoice.user.login
+            var description = "${invoice.user.fio} ${invoice.user.login}"
             if (description.length > 255) {
                 description = description.substring(253) + "..."
             }
@@ -93,7 +84,7 @@ class BotController(
                 SendInvoice.builder()
                     .chatId(chatId)
                     .currency("BYN")
-                    .providerToken(getBotPaymentToken())
+                    .providerToken(botConfig.botPaymentToken!!)
                     .title(title)
                     .description(description)
                     .payload(parameter)
@@ -106,7 +97,6 @@ class BotController(
             execute(
                 SendMessage.builder()
                     .chatId(chatId)
-                    .parseMode("Markdown")
                     .text(e.message ?: "Ошибка!")
                     .build()
             )
@@ -122,7 +112,7 @@ class BotController(
             execute(
                 SendMessage.builder()
                     .chatId(chatId)
-                    .text("Заказ успешно оплачен!")
+                    .text(String.format("Проживание за %02d.%d успешно оплачено!", invoice.month, invoice.year))
                     .build()
             )
         } catch (e: Exception) {
