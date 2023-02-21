@@ -24,7 +24,7 @@ class BotController(
 ) : TelegramLongPollingBot(botConfig.token) {
 
     override fun getBotUsername(): String {
-        return botConfig.name!!
+        return botConfig.name
     }
 
     override fun onUpdateReceived(update: Update) {
@@ -84,7 +84,7 @@ class BotController(
                 SendInvoice.builder()
                     .chatId(chatId)
                     .currency("BYN")
-                    .providerToken(botConfig.botPaymentToken!!)
+                    .providerToken(botConfig.botPaymentToken)
                     .title(title)
                     .description(description)
                     .payload(parameter)

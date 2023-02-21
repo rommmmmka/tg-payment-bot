@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class BotConfig {
     @Value("\${telegram.name}")
-    var name: String? = null
+    lateinit var name: String
 
     @Value("\${telegram.token}")
-    var token: String? = null
+    lateinit var token: String
 
     @Value("\${telegram.payment-token}")
-    var botPaymentToken: String? = null
+    lateinit var botPaymentToken: String
 }

@@ -12,7 +12,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession
 @Component
 class BotInit {
     @Autowired
-    var telegramBot: LongPollingBot? = null
+    lateinit var telegramBot: LongPollingBot
 
     @EventListener(ContextRefreshedEvent::class)
     fun init() {
