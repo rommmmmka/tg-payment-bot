@@ -1,10 +1,10 @@
-package com.kravets.opt
+package com.kravets.dormitoryhelperbot
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class OptApplicationTests {
+class DormitoryHelperBotApplicationTests {
 
     @Test
     fun contextLoads() {

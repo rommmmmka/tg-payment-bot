@@ -1,4 +1,4 @@
-package com.kravets.opt.bot
+package com.kravets.dormitoryhelperbot.bot
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.event.ContextRefreshedEvent

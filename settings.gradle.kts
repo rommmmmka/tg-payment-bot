@@ -1,1 +1,1 @@
-rootProject.name = "opt"
+rootProject.name = "DormitoryHelperBot"

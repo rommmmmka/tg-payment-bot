@@ -1,9 +1,9 @@
-package com.kravets.opt.bot
+package com.kravets.dormitoryhelperbot.bot
 
-import com.kravets.opt.data.Invoice
-import com.kravets.opt.exception.InvoiceAlreadyPayedException
-import com.kravets.opt.exception.InvoiceNotFoundException
-import com.kravets.opt.repository.InvoiceRepository
+import com.kravets.dormitoryhelperbot.data.Invoice
+import com.kravets.dormitoryhelperbot.exception.InvoiceAlreadyPayedException
+import com.kravets.dormitoryhelperbot.exception.InvoiceNotFoundException
+import com.kravets.dormitoryhelperbot.repository.InvoiceRepository
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Component
 import org.telegram.telegrambots.bots.TelegramLongPollingBot

@@ -1,11 +1,11 @@
-package com.kravets.opt
+package com.kravets.dormitoryhelperbot
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class OptApplication
+class DormitoryHelperBotApplication
 
 fun main(args: Array<String>) {
-    runApplication<OptApplication>(*args)
+    runApplication<DormitoryHelperBotApplication>(*args)
 }

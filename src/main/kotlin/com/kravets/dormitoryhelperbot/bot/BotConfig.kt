@@ -1,4 +1,4 @@
-package com.kravets.opt.bot
+package com.kravets.dormitoryhelperbot.bot
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration

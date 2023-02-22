@@ -1,6 +1,6 @@
-package com.kravets.opt.repository
+package com.kravets.dormitoryhelperbot.repository
 
-import com.kravets.opt.data.User
+import com.kravets.dormitoryhelperbot.data.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
